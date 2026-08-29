@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Metafísica dos Costumes — Guia Interativo</title>
+<style>
+:root{
+  --navy:#0E2A33; --navy-2:#163A46; --navy-3:#0A1F26;
+  --lat:#B98A2F; --lat-2:#D4A94E; --lat-dim:#8a6a24;
+  --paper:#F6F4EE; --paper-2:#EFEBE0; --ink:#1E2A2E; --ink-soft:#4A5A5E;
+  --line:#D8D2C2; --line-2:#C9C1AC;
+  --green:#1F7D5C; --red:#A13A52; --amber:#B98A2F;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Public Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+::selection{background:var(--lat);color:#fff}
+
+/* ===== TOPBAR ===== */
+.topbar{position:sticky;top:0;z-index:50;background:var(--navy);color:var(--paper);
+  border-bottom:3px solid var(--lat);padding:14px 28px;display:flex;align-items:center;gap:18px}
+.topbar .brand{display:flex;align-items:center;gap:12px;min-width:0}
+.topbar .brand .mark{font-family:var(--serif);font-size:22px;color:var(--lat);font-weight:600;letter-spacing:.5px}
+.topbar .brand .t{font-family:var(--serif);font-size:15px;letter-spacing:.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .brand .t small{display:block;font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--lat-2);text-transform:uppercase}
+.topbar .spacer{flex:1}
+.topbar .print-btn{background:var(--lat);color:#fff;border:none;padding:8px 16px;border-radius:4px;
+  font-family:var(--sans);font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.5px}
+.topbar .print-btn:hover{background:var(--lat-2)}
+
+/* ===== LAYOUT ===== */
+.layout{display:flex;min-height:calc(100vh - 60px)}
+.sidebar{width:300px;flex-shrink:0;background:var(--navy-2);color:var(--paper);
+  border-right:1px solid var(--navy-3);position:sticky;top:60px;height:calc(100vh - 60px);overflow-y:auto}
+.sidebar .s-head{padding:20px 20px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar .s-head .eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--lat-2);text-transform:uppercase}
+.sidebar .s-head h2{font-family:var(--serif);font-size:18px;font-weight:600;margin-top:4px}
+.sidebar nav{padding:12px 0}
+.sidebar .nav-group{padding:8px 0}
+.sidebar .nav-group .g-label{padding:6px 20px;font-family:var(--mono);font-size:9px;letter-spacing:2px;color:var(--lat-2);text-transform:uppercase}
+.sidebar .nav-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:none;border:none;
+  color:var(--paper);padding:9px 20px;font-family:var(--sans);font-size:13px;cursor:pointer;border-left:3px solid transparent;transition:all .15s}
+.sidebar .nav-item:hover{background:rgba(255,255,255,.06)}
+.sidebar .nav-item.active{background:rgba(255,255,255,.1);border-left-color:var(--lat);color:#fff}
+.sidebar .nav-item .num{font-family:var(--mono);font-size:11px;color:var(--lat-2);min-width:22px}
+.sidebar .nav-item .sub{display:block;font-size:10px;color:rgba(255,255,255,.5);font-family:var(--mono);letter-spacing:.5px}
+
+/* ===== MAIN ===== */
+.main{flex:1;min-width:0;padding:0}
+.content{max-width:880px;margin:0 auto;padding:48px 40px 80px}
+
+/* ===== HERO ===== */
+.hero{padding:56px 40px 40px;background:var(--navy);color:var(--paper);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:280px;height:280px;border:1px solid rgba(185,138,47,.25);border-radius:50%}
+.hero::before{content:"";position:absolute;right:20px;top:20px;width:180px;height:180px;border:1px solid rgba(185,138,47,.15);border-radius:50%}
+.hero .inner{max-width:880px;margin:0 auto;position:relative;z-index:1}
+.hero .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--lat-2);text-transform:uppercase;margin-bottom:18px}
+.hero h1{font-family:var(--serif);font-size:clamp(30px,5vw,46px);font-weight:600;line-height:1.1;margin-bottom:14px}
+.hero h1 em{font-style:italic;color:var(--lat-2)}
+.hero .sub{font-size:16px;color:rgba(255,255,255,.75);max-width:640px;margin-bottom:28px}
+.hero .meta{display:flex;flex-wrap:wrap;gap:10px}
+.hero .chip{font-family:var(--mono);font-size:11px;letter-spacing:1px;color:var(--paper);
+  border:1px solid rgba(255,255,255,.25);padding:6px 12px;border-radius:3px}
+.hero .chip b{color:var(--lat-2);font-weight:600}
+
+/* ===== SECTION ===== */
+.section{display:none;animation:fadeIn .3s ease}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.sec-head{margin-bottom:32px;padding-bottom:20px;border-bottom:2px solid var(--lat)}
+.sec-head .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:3px;color:var(--lat);text-transform:uppercase;margin-bottom:8px}
+.sec-head h2{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1.15}
+.sec-head p{color:var(--ink-soft);margin-top:8px;font-size:15px}
+
+/* ===== CARDS / BLOCKS ===== */
+.card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:24px;margin-bottom:20px;box-shadow:0 1px 2px rgba(14,42,51,.04)}
+.card h3{font-family:var(--serif);font-size:19px;font-weight:600;margin-bottom:10px;color:var(--navy)}
+.card h3 .tag{font-family:var(--mono);font-size:10px;color:var(--lat);letter-spacing:1px;text-transform:uppercase;margin-right:8px}
+.card p{color:var(--ink-soft);font-size:14.5px}
+.card .lead{font-size:15.5px;color:var(--ink);line-height:1.7}
+
+/* ===== CHAPTER ===== */
+.chapter-hero{background:var(--navy);color:var(--paper);border-radius:8px;padding:28px 30px;margin-bottom:24px;position:relative;overflow:hidden}
+.chapter-hero::before{content:attr(data-num);position:absolute;right:18px;top:-30px;font-family:var(--serif);font-size:130px;font-weight:700;color:rgba(185,138,47,.18);line-height:1}
+.chapter-hero .parte{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--lat-2);text-transform:uppercase;margin-bottom:8px}
+.chapter-hero h2{font-family:var(--serif);font-size:26px;font-weight:600;position:relative;z-index:1}
+.chapter-hero .core{margin-top:14px;font-size:14.5px;color:rgba(255,255,255,.8);line-height:1.7;position:relative;z-index:1;max-width:720px}
+.chapter-hero .core b{color:var(--lat-2);font-weight:600}
+
+.block{margin-bottom:26px}
+.block .b-label{font-family:var(--mono);font-size:10px;letter-spacing:2px;color:var(--lat);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.block .b-label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.fw-item{background:#fff;border:1px solid var(--line);border-left:3px solid var(--lat);border-radius:4px;padding:18px 20px;margin-bottom:12px}
+.fw-item h4{font-family:var(--serif);font-size:16px;font-weight:600;color:var(--navy);margin-bottom:6px}
+.fw-item p{font-size:14px;color:var(--ink-soft);line-height:1.65}
+
+.concept-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.concept{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.concept .term{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.concept .def{font-size:12.5px;color:var(--ink-soft);line-height:1.55}
+
+.takeaway{display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:4px;padding:12px 16px;margin-bottom:8px}
+.takeaway .tick{color:var(--green);font-weight:700;font-size:15px;line-height:1.4}
+.takeaway p{font-size:14px;color:var(--ink)}
+
+.anti{display:flex;gap:12px;align-items:flex-start;background:#FDF6F4;border:1px solid #E8C9C4;border-left:3px solid var(--red);border-radius:4px;padding:12px 16px;margin-bottom:8px}
+.anti .warn{color:var(--red);font-weight:700;font-size:15px;line-height:1.4}
+.anti p{font-size:13.5px;color:#6B3A3A}
+
+/* ===== GLOSSARY ===== */
+.gloss-search{position:relative;margin-bottom:20px}
+.gloss-search input{width:100%;padding:14px 18px 14px 44px;border:1px solid var(--line);border-radius:6px;
+  font-family:var(--sans);font-size:15px;background:#fff;color:var(--ink)}
+.gloss-search input:focus{outline:none;border-color:var(--lat);box-shadow:0 0 0 3px rgba(185,138,47,.15)}
+.gloss-search .icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--lat);font-size:16px}
+.gloss-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.gloss-item{background:#fff;border:1px solid var(--line);border-radius:4px;padding:14px 16px;transition:border-color .15s}
+.gloss-item:hover{border-color:var(--lat)}
+.gloss-item .term{font-family:var(--serif);font-size:14px;font-weight:600;color:var(--navy);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.gloss-item .term .ch{font-family:var(--mono);font-size:9px;color:var(--lat);border:1px solid var(--line-2);padding:1px 5px;border-radius:3px;letter-spacing:1px}
+.gloss-item .def{font-size:12.5px;color:var(--ink-soft);line-height:1.55}
+.gloss-count{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-bottom:12px}
+
+/* ===== TABLES ===== */
+.table-wrap{overflow-x:auto;background:#fff;border:1px solid var(--line);border-radius:6px}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+thead th{background:var(--navy);color:var(--paper);text-align:left;padding:12px 16px;font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;position:sticky;top:0}
+tbody td{padding:11px 16px;border-top:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:var(--paper-2)}
+tbody tr:hover{background:#F0EDE2}
+td .mono{font-family:var(--mono);font-size:11px;color:var(--lat)}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.5px;padding:3px 8px;border-radius:3px;font-weight:600}
+.badge.green{background:#E3F2EC;color:var(--green)}
+.badge.red{background:#FBE7EC;color:var(--red)}
+.badge.amber{background:#F6EEDC;color:var(--amber)}
+
+/* ===== TREE ===== */
+.tree{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tree-col{background:#fff;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.tree-col .t-head{padding:16px 20px;color:#fff}
+.tree-col.direito .t-head{background:var(--navy)}
+.tree-col.etica .t-head{background:var(--green)}
+.tree-col .t-head h3{font-family:var(--serif);font-size:18px;font-weight:600}
+.tree-col .t-head p{font-size:11px;opacity:.8;font-family:var(--mono);letter-spacing:.5px;margin-top:2px}
+.tree-col .t-body{padding:18px 20px}
+.tree-step{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px;position:relative}
+.tree-step:not(:last-child)::after{content:"";position:absolute;left:11px;top:26px;bottom:-12px;width:2px;background:var(--line)}
+.tree-step .dot{width:22px;height:22px;border-radius:50%;background:var(--paper-2);border:2px solid var(--lat);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:10px;color:var(--lat);flex-shrink:0;font-weight:600}
+.tree-step p{font-size:13.5px;color:var(--ink);line-height:1.5;padding-top:2px}
+
+/* ===== PATTERNS ===== */
+.pattern{background:#fff;border:1px solid var(--line);border-radius:6px;padding:22px 24px;margin-bottom:16px}
+.pattern .p-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.pattern .p-head .p-num{font-family:var(--serif);font-size:20px;color:var(--lat);font-weight:700}
+.pattern .p-head h3{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--navy)}
+.pattern .p-head .ch{font-family:var(--mono);font-size:9px;color:var(--lat);border:1px solid var(--line-2);padding:2px 6px;border-radius:3px;letter-spacing:1px;margin-left:auto}
+.pattern .p-use{font-size:12px;font-family:var(--mono);color:var(--lat);letter-spacing:.5px;text-transform:uppercase;margin-bottom:8px}
+.pattern p{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:8px}
+.pattern .p-trade{font-size:13px;color:var(--ink);background:var(--paper-2);border-left:3px solid var(--lat);padding:10px 14px;border-radius:0 4px 4px 0}
+.pattern .p-trade b{color:var(--navy)}
+
+/* ===== FOOTER ===== */
+.footer{margin-top:48px;padding-top:24px;border-top:2px solid var(--lat);font-family:var(--mono);font-size:11px;color:var(--ink-soft);line-height:1.8}
+.footer .rule{color:var(--lat)}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{width:100%;position:static;height:auto;border-right:none;border-bottom:1px solid var(--navy-3)}
+  .sidebar nav{display:flex;flex-wrap:wrap;gap:4px;padding:10px 12px}
+  .sidebar .nav-group{display:contents}
+  .sidebar .nav-group .g-label{display:none}
+  .sidebar .nav-item{width:auto;border-left:none;border-bottom:2px solid transparent;padding:8px 12px;border-radius:4px}
+  .sidebar .nav-item.active{border-bottom-color:var(--lat)}
+  .sidebar .nav-item .sub{display:none}
+  .content{padding:32px 20px 60px}
+  .hero{padding:40px 20px 30px}
+  .tree{grid-template-columns:1fr}
+  .topbar{padding:12px 16px}
+  .topbar .brand .t{font-size:13px}
+}
+@media(max-width:520px){
+  .concept-grid,.gloss-list{grid-template-columns:1fr}
+  .topbar .print-btn{display:none}
+}
+
+/* ===== PRINT ===== */
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff;color:#000}
+  .topbar,.sidebar,.print-btn{display:none!important}
+  .layout{display:block}
+  .content{max-width:100%;padding:0}
+  .section{display:block!important}
+  .card,.fw-item,.concept,.takeaway,.anti,.pattern,.tree-col{box-shadow:none;border-color:#999}
+  .chapter-hero,.tree-col .t-head{background:#fff;color:#000;border:2px solid #000}
+  .chapter-hero .core,.chapter-hero .parte{color:#000}
+  .chapter-hero::before{color:#ddd}
+  thead th{background:#fff;color:#000;border-bottom:2px solid #000}
+  .gloss-search{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <div class="mark">§</div>
+    <div class="t">A Metafísica dos Costumes<small>Immanuel Kant · 1797</small></div>
+  </div>
+  <div class="spacer"></div>
+  <button class="print-btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="s-head">
+      <div class="eyebrow">Sumário</div>
+      <h2>Guia Interativo</h2>
+    </div>
+    <nav id="nav"></nav>
+  </aside>
+
+  <main class="main">
+    <!-- HERO -->
+    <div class="hero">
+      <div class="inner">
+        <div class="eyebrow">Guia compreensivo · Doutrina dos Costumes</div>
+        <h1>A <em>Metafísica dos Costumes</em></h1>
+        <p class="sub">Guia interativo e navegável da obra de Immanuel Kant (1797) — a fundamentação racional do Direito e da Ética a partir do imperativo categórico, da liberdade e do dever. Estruturado em 8 capítulos, com glossário, regras de decisão e padrões de aplicação.</p>
+        <div class="meta">
+          <span class="chip"><b>8</b> capítulos</span>
+          <span class="chip"><b>2</b> doutrinas</span>
+          <span class="chip"><b>56</b> termos</span>
+          <span class="chip"><b>12</b> padrões</span>
+          <span class="chip">trad. Edson Bini · Edipro</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+      <!-- VISÃO GERAL -->
+      <section class="section" id="sec-overview">
+        <div class="sec-head">
+          <div class="eyebrow">Visão geral</div>
+          <h2>A arquitetura da obra</h2>
+          <p>A Metafísica dos Costumes divide-se em duas doutrinas que partilham os mesmos conceitos preliminares (obrigação, imperativo, dever, imputação): a Doutrina do Direito (liberdade externa, legalidade, coerção) e a Doutrina da Virtude (liberdade interna, moralidade, fins que são deveres).</p>
+        </div>
+
+        <div class="card">
+          <h3><span class="tag">Tese central</span>O imperativo categórico como fundamento</h3>
+          <p class="lead">As leis morais são <b>imperativos categóricos</b> para seres sensivelmente afetados como nós: comandam incondicionalmente, pela forma da ação, não como meio para um fim. O Direito regula a <b>liberdade externa</b> (coexistência das liberdades segundo uma lei universal); a Ética exige <b>fins que são também deveres</b>, produzidos pela razão prática pura sob <b>auto-constrangimento</b>.</p>
+        </div>
+
+        <div class="block">
+          <div class="b-label">Árvore de decisão — Direito vs. Ética</div>
+          <div class="tree">
+            <div class="tree-col direito">
+              <div class="t-head"><h3>DIREITO</h3><p>liberdade externa · legalidade · coerção</p></div>
+              <div class="t-body">
+                <div class="tree-step"><div class="dot">1</div><p>A ação é <b>externa</b> e regula a <b>liberdade externa</b>?</p></div>
+                <div class="tree-step"><div class="dot">2</div><p>Pode coexistir com a liberdade de todos? → <b>Justa</b></p></div>
+                <div class="tree-step"><div class="dot">3</div><p>Não? → <b>Injusta</b>, sujeita a coerção</p></div>
+              </div>
+            </div>
+            <div class="tree-col etica">
+              <div class="t-head"><h3>ÉTICA</h3><p>liberdade interna · moralidade · auto-constrangimento</p></div>
+              <div class="t-body">
+                <div class="tree-step"><div class="dot">1</div><p>A ação exige um <b>fim</b> e a <b>liberdade interna</b>?</p></div>
+                <div class="tree-step"><div class="dot">2</div><p>O fim é também um dever? → <b>Dever de virtude</b></p></div>
+                <div class="tree-step"><div class="dot">3</div><p>É proibido (vício)? → <b>Dever perfeito</b> (omissão)</p></div>
+                <div class="tree-step"><div class="dot">4</div><p>É um fim a promover? → <b>Dever imperfeito</b> (fins)</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="b-label">Estrutura da obra</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>#</th><th>Capítulo</th><th>Parte</th><th>Frameworks-chave</th></tr></thead>
+              <tbody id="tbl-estrutura"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- CAPÍTULOS -->
+      <section class="section" id="sec-chapters">
+        <div class="sec-head">
+          <div class="eyebrow">Capítulos</div>
+          <h2>Os oito capítulos</h2>
+          <p>Navegue pelos capítulos da obra. Cada um traz a ideia central, os frameworks, os conceitos-chave, os pontos de retenção e os anti-padrões.</p>
+        </div>
+        <div id="chapter-nav" class="chapter-pager"></div>
+        <div id="chapter-view"></div>
+      </section>
+
+      <!-- GLOSSÁRIO -->
+      <section class="section" id="sec-glossary">
+        <div class="sec-head">
+          <div class="eyebrow">Glossário</div>
+          <h2>Termos-chave</h2>
+          <p>Definições dos conceitos centrais da obra, com o capítulo de referência. Use a busca para filtrar.</p>
+        </div>
+        <div class="gloss-search">
+          <span class="icon">⌕</span>
+          <input type="text" id="gloss-input" placeholder="Buscar termo ou definição…" aria-label="Buscar no glossário">
+        </div>
+        <div class="gloss-count" id="gloss-count"></div>
+        <div class="gloss-list" id="gloss-list"></div>
+      </section>
+
+      <!-- CHEATSHEET -->
+      <section class="section" id="sec-cheatsheet">
+        <div class="sec-head">
+          <div class="eyebrow">Cheatsheet</div>
+          <h2>Regras de decisão</h2>
+          <p>Referência rápida: situação → decisão → fundamento. E os deveres consigo mesmo e com os outros.</p>
+        </div>
+
+        <div class="block">
+          <div class="b-label">Regras de decisão</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Situação</th><th>Decisão</th><th>Por quê</th></tr></thead>
+              <tbody id="tbl-rules"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="b-label">Deveres consigo mesmo</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Tipo</th><th>Dever</th><th>Vício oposto</th></tr></thead>
+              <tbody id="tbl-consigo"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="b-label">Deveres com os outros</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Força</th><th>Dever</th><th>Caráter</th></tr></thead>
+              <tbody id="tbl-outros"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="block">
+          <div class="b-label">Tells &amp; smells — sinais de erro</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Sinal</th><th>O que indica</th><th>Cap.</th></tr></thead>
+              <tbody id="tbl-tells"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- PADRÕES -->
+      <section class="section" id="sec-patterns">
+        <div class="sec-head">
+          <div class="eyebrow">Padrões</div>
+          <h2>Padrões de aplicação</h2>
+          <p>As técnicas e modelos mentais da obra, prontos para aplicar: quando usar, como, e os trade-offs.</p>
+        </div>
+        <div id="patterns-list"></div>
+      </section>
+
+      <div class="footer">
+        <div class="rule">— § —</div>
+        <p>Guia interativo gerado a partir da base de conhecimento <b>A Metafísica dos Costumes</b> (Immanuel Kant, 1797; trad. Edson Bini, Edipro 2003).<br>
+        Estrutura: 8 capítulos · Doutrina do Direito (I–IV) · Doutrina da Virtude (V–VIII).</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ===== DADOS ===== */
+const CHAPTERS = [{"num": "I", "titulo": "Introdução à Metafísica dos Costumes", "parte": "Prolegômenos", "core": "Kant estabelece o arcabouço conceitual de toda a obra: a distinção entre leis da natureza e leis da liberdade (morais), a faculdade do desejo e a vontade, e os conceitos preliminares (obrigação, imperativo, dever, imputação) que fundamentam tanto o Direito quanto a Ética.", "frameworks": [["Leis da natureza vs. leis da liberdade", "Leis da natureza regem o que acontece; leis da liberdade (morais) regem o que deve acontecer, mesmo que nunca aconteça. Quando dirigidas a ações externas e sua conformidade à lei, são leis jurídicas; quando exigem que a própria lei seja o fundamento determinante, são leis éticas."], ["Legalidade vs. moralidade", "Conformidade com leis jurídicas = legalidade; conformidade com leis éticas = moralidade. A liberdade do Direito é só no uso externo da escolha; a da Ética, no uso externo e interno."], ["Imperativo categórico vs. técnico", "O categórico (incondicional) representa uma ação como objetivamente necessária pela mera representação da própria ação (sua forma); os técnicos (preceitos da arte) comandam sempre condicionalmente. Só a doutrina dos costumes fornece exemplos de imperativos categóricos."], ["Conceito negativo e positivo de liberdade", "Negativo = independência de ser determinado por impulsos sensíveis; positivo = capacidade da razão pura de ser, por si mesma, prática, pela sujeição da máxima de toda ação à condição de sua qualificação como lei universal."]], "conceitos": [["Vontade", "Faculdade do desejo considerada quanto ao fundamento que determina a escolha; estritamente, não tem fundamento determinante — é a própria razão prática."], ["Arbítrio (Willkür)", "Escolha determinável pela razão pura (livre arbítrio) ou só pela inclinação (arbítrio animal). O arbítrio humano é afetado por impulsos mas não determinado por eles."], ["Obrigação", "Necessidade de uma ação livre sob um imperativo categórico da razão."], ["Imperativo", "Regra prática pela qual uma ação em si contingente é tomada necessária; representa o sujeito como compelido a conformar-se à regra."], ["Dever", "A ação à qual alguém está obrigado; a matéria da obrigação."], ["Ação permitida (licitum)", "A que não contraria a obrigação; a liberdade não limitada por imperativo contrário é autorização (facultas moralis); o contrário é o proibido (illicitum)."], ["Transgressão (reatus)", "Feito contrário ao dever."], ["Concupiscência", "Determinação sensível da mente que ainda não se converteu em ato da faculdade do desejo."], ["Interesse", "Conexão do prazer com a faculdade do desejo que o entendimento julga encerrar como regra geral; pode ser intelectual (puro) ou sensível."]], "takeaways": ["Leis morais são imperativos categóricos para seres sensivelmente afetados como nós.", "O Direito regula a liberdade externa; a Ética, a interna e a externa.", "Legalidade ≠ moralidade: uma é conformidade externa, a outra exige a lei como motivo.", "A liberdade tem conceito negativo (independência de impulsos) e positivo (autolegislação).", "Obrigação, dever e imputação são os conceitos preliminares comuns às duas partes da Metafísica dos Costumes."], "anti": ["Confundir legalidade com moralidade: uma ação pode ser legal (conforme à lei externa) sem ser moral (feita pela lei como motivo). O Direito não exige que a lei seja o motivo; a Ética sim.", "Tratar o conceito de liberdade como constitutivo na filosofia teórica: a liberdade é transcendente para a razão especulativa; só tem validade como princípio regulador (negativo) e prova sua realidade no uso prático."]}, {"num": "II", "titulo": "Introdução à Doutrina do Direito", "parte": "Doutrina do Direito", "core": "Kant define o conceito de direito como a soma das condições sob as quais a escolha de alguém pode ser unida à escolha de outrem segundo uma lei universal de liberdade, e mostra que o direito estrito está essencialmente ligado à competência de exercer coerção.", "frameworks": [["Princípio universal do Direito", "Qualquer ação é justa se for capaz de coexistir com a liberdade de todos de acordo com uma lei universal, ou se na sua máxima a liberdade de todos de acordo com uma lei universal. Quem obstaculiza minha ação justa me produz injustiça."], ["Direito estrito (ius strictum)", "Direito que não está combinado com nada ético; requer apenas fundamentos externos para determinar a escolha. É puro e não mesclado a preceitos de virtude."], ["Direito equívoco (ius aequivocum)", "Direito em sentido lato (ius latum), no qual nenhuma lei determina como alguém deve julgar; inclui a equidade e o direito de necessidade."], ["Coerção recíproca universal", "O direito estrito pode ser representado como a possibilidade de um uso inteiramente recíproco de coerção compatível com a liberdade de todos. Direito e competência de empregar coerção significam uma única coisa."]], "conceitos": [["Direito", "Soma das condições sob as quais a escolha de alguém pode ser unida à escolha de outrem de acordo com uma lei universal de liberdade."], ["Relação externa", "O conceito de direito tem a ver somente com a relação externa e prática de uma pessoa com outra, na medida em que suas ações podem influir entre si."], ["Forma da escolha", "O direito não considera a matéria da escolha (o fim de cada um), mas apenas a forma na relação de escolha, considerada como livre."], ["Equidade", "Direito sem coerção; um direito em sentido lato que não pode ser decidido por tribunal."], ["Direito de necessidade", "Pretensão de usar a força quando a própria vida está em perigo imediato (ex.: o náufrago que empurra outro da tábua)."], ["Postulado", "A lei universal do direito é um postulado não suscetível de prova adicional."]], "takeaways": ["O direito é a soma das condições para a coexistência das liberdades segundo uma lei universal.", "O princípio universal do direito é um postulado, não uma exigência de virtude.", "O direito estrito requer apenas fundamentos externos e está ligado à coerção.", "Equidade e direito de necessidade são direitos equívocos (lato sensu), fora do direito estrito.", "A doutrina do direito busca precisão matemática; a da virtude admite latitude."], "anti": ["Doutrina do direito meramente empírica: como a cabeça de madeira da fábula de Fedro, é uma cabeça possivelmente bela, mas infelizmente falta-lhe o cérebro — sem buscar as fontes dos juízos na razão, não se conhece o critério universal do certo e errado.", "Exigir que a lei do direito seja o motivo da ação: quando o objetivo é expor o que é o direito (não ensinar virtude), não se deve representar a lei do direito como o motivo da ação."]}, {"num": "III", "titulo": "Direito Privado", "parte": "Doutrina do Direito · Parte I", "core": "Kant fundamenta a possibilidade de ter algo externo como seu (posse inteligível), a aquisição por contrato e os direitos pessoais de caráter real (sociedade doméstica: matrimonial, dos pais e do chefe do lar), a partir do postulado da razão prática.", "frameworks": [["Postulado da razão prática quanto aos direitos", "É possível para mim ter qualquer objeto externo de minha escolha como meu. Uma máxima que tornasse um objeto de escolha res nullius (pertencente a ninguém) seria contrária à lei."], ["Posse sensível vs. posse inteligível", "Posse sensível (física, detentio) é a ocupação empírica; posse inteligível (possessio noumenon) é a posse jurídica de um objeto sem ocupação física."], ["Aquisição originária vs. derivada", "A aquisição originária (primeira ocupação) é a base; a derivada (por contrato) transfere o que já é de alguém."], ["Direito pessoal de caráter real (ius in re)", "Direito sobre uma pessoa como se fosse uma coisa, no contexto da sociedade doméstica — o direito de adquirir algo externo por meio de outra pessoa."]], "conceitos": [["Meu jurídico (meum iuris)", "Aquilo com que estou ligado de tal forma que seu uso por outrem sem meu consentimento me prejudicaria."], ["Contrato", "Ato pelo qual a vontade de dois sujeitos transfere a propriedade de algo; a aquisição contratual é derivada."], ["Direito matrimonial", "Relação de igualdade entre duas pessoas de sexos diferentes para a posse recíproca de suas pessoas (sociedade doméstica)."], ["Direito dos pais", "Direito dos pais sobre os filhos, que não são coisas nem podem ser tratados como propriedade."], ["Direito do chefe do lar", "Direito sobre os servos/domésticos, limitado — não pode privá-los da liberdade."], ["Seção episódica", "Trata de casos ambíguos (anfibolia) nos conceitos morais de reflexão."]], "takeaways": ["A propriedade se funda no postulado da razão prática, não em convenção empírica.", "Posse inteligível (jurídica) ≠ posse sensível (física).", "A aquisição é originária (primeira ocupação) ou derivada (contrato).", "A sociedade doméstica envolve direitos pessoais de caráter real, sempre limitados.", "Filhos e servos não podem ser tratados como coisas."], "anti": ["Tratar filhos ou servos como propriedade: o direito dos pais e do chefe do lar é limitado; privar alguém da liberdade é contrário ao dever de direito.", "Confundir posse física com posse jurídica: a posse inteligível é o que fundamenta o meu jurídico, não a detenção empírica."]}, {"num": "IV", "titulo": "Direito Público", "parte": "Doutrina do Direito · Parte II", "core": "Kant desenvolve o direito público como o sistema de leis que cria uma condição jurídica: o Direito do Estado (constituição civil), o Direito das Gentes (relações entre Estados) e o Direito Cosmopolita (comunidade universal pacífica).", "frameworks": [["Direito público", "O conjunto das leis que precisam ser promulgadas para criar uma condição jurídica. É um sistema de leis para um povo ou para uma multidão de povos que, porque se afetam entre si, precisam de uma condição jurídica sob uma vontade que os una (constituição)."], ["Estado (civitas)", "O conjunto dos indivíduos numa condição jurídica, em relação aos seus próprios membros. Pela forma chama-se res publica; relativamente a outros povos, potência (potentia); por ser associação herdada, nação (gens)."], ["República representativa", "Qualquer república genuína é e só pode ser um sistema representativo do povo, protegendo seus direitos em seu nome pela união de todos os cidadãos e atuando através de delegados. O povo é o soberano original."], ["Direito das Gentes (ius publicum civitatum)", "O direito dos Estados na sua relação recíproca. Um Estado, como pessoa moral, vive em relação com outro na condição de liberdade natural e, portanto, de guerra constante."], ["Liga de nações (foedus Amphictyonum)", "Uma federação de Estados livres, sem autoridade soberana, dissolvível e renovável, para proteção contra ataques externos — não uma intromissão nos desentendimentos internos."], ["Direito Cosmopolita (ius cosmopoliticum)", "A ideia racional de uma comunidade universal pacífica de todas as nações que podem entreter relações que as afetam mutuamente. Não é princípio filantrópico (ético), mas princípio jurídico, fundado na esfericidade da Terra (globus terraqueus)."]], "conceitos": [["Condição civil (status civilis)", "Condição dos indivíduos no seio de um povo na sua relação recíproca."], ["Soberania popular", "No povo é originalmente encontrada a suprema autoridade da qual todos os direitos dos indivíduos como súditos têm que ser derivados."], ["Direito de estabelecimento", "O direito de instalar-se em terras de outro povo; não pode ocorrer pela força contra povos que dependem de vastas regiões (pastores, caçadores), mas somente mediante contrato que não tire vantagem da ignorância dos habitantes."], ["Direito provisório vs. peremptório", "No direito das gentes, a aquisição é provisória até ser garantida por uma autoridade que torne efetivo o direito."]], "takeaways": ["O direito público cria a condição jurídica (constituição) que torna efetivos os direitos.", "A república representativa é o único modelo legítimo; o povo é o soberano.", "O direito das gentes rege Estados em estado de natureza (guerra constante).", "A liga de nações é uma federação dissolvível, sem autoridade soberana.", "O direito cosmopolita é jurídico, não filantrópico, e proíbe a colonização pela força."], "anti": ["Colonização pela força: apoderar-se das terras de povos pastores/caçadores pela força, mesmo com boas intenções (civilizá-los), é injusto — todas estas pretensas boas intenções são incapazes de limpar a mácula da injustiça presente nos meios que utilizam.", "Estado que comete suicídio: um Estado que se dissolve completamente (anarquia) é como se cometesse suicídio; a condição jurídica deve ser preservada.", "Liga com autoridade soberana: a liga de nações não deve envolver autoridade soberana (como numa constituição civil), mas somente uma associação (federação) dissolvível."]}, {"num": "V", "titulo": "Introdução à Doutrina da Virtude", "parte": "Doutrina da Virtude", "core": "Kant define a ética como a doutrina dos fins que são também deveres: enquanto o direito regula a condição formal da liberdade externa, a ética produz uma matéria (um fim) que a razão pura representa como objetivamente necessária — o auto-constrangimento moral.", "frameworks": [["Fim que é também um dever", "Um fim é um objeto da escolha através de cuja representação a escolha é determinada a levar a efeito esse objeto. Não posso ser constrangido por outros a ter um fim (a coerção aos fins é contraditória); somente eu posso fazer de algo meu fim. Se estou obrigado a tomar como fim algo que reside em conceitos da razão prática, tenho um fim que é em si mesmo um dever."], ["Ética como sistema dos fins da razão prática pura", "A ética pode ser definida como o sistema dos fins da pura razão prática. Fins e deveres distinguem as duas divisões da doutrina dos costumes."], ["Auto-constrangimento (Selbstzwang)", "Quando o conceito de dever toca a determinação interna da vontade, o constrangimento só pode ser auto-constrangimento (através da representação da lei exclusivamente), para que a coação se una ao conceito de liberdade da escolha."], ["Virtude como fortitudo moralis", "A faculdade e a intenção deliberada de resistir a um oponente vigoroso mas injusto é a coragem (fortitudo); no que tange ao que se opõe à disposição moral em nós, é a virtude (virtus, fortitudo moralis)."]], "conceitos": [["Doutrina da virtude (doctrina officiorum virtutis)", "A parte da doutrina geral dos deveres que resulta em liberdade interior, e não exterior, sob as leis éticas."], ["Coragem (fortitudo)", "Resistência a um oponente vigoroso mas injusto."], ["Virtude (virtus)", "Fortitude moral, resistência à disposição moral em nós."], ["Fim", "Objeto da escolha através de cuja representação a escolha é determinada a levar a efeito esse objeto."], ["Auto-constrangimento", "Constrangimento através da representação da lei exclusivamente, unido ao conceito de liberdade."]], "takeaways": ["A ética é a doutrina dos fins que são também deveres.", "Ninguém pode me coagir a ter um fim; a coerção aos fins é contraditória.", "A virtude é fortitude moral: resistir ao que se opõe à disposição moral.", "O constrangimento ético é auto-constrangimento, unido à liberdade.", "O direito regula a liberdade externa; a ética produz fins."], "anti": ["Confundir amor como sentimento com amor prático: o amor não é para ser entendido como sentimento (prazer na perfeição de outros), mas como máxima da benevolência (prático), que resulta em beneficência.", "Adiar o cumprimento do dever: o ser humano tem que considerar que pode fazer o que a lei lhe diz incondicionalmente deve fazer, imediatamente, não em alguma ocasião futura."]}, {"num": "VI", "titulo": "Elementos da Ética — Deveres Consigo Mesmo", "parte": "Doutrina da Virtude · Elementos", "core": "Kant desenvolve os deveres do ser humano consigo mesmo, divididos em deveres perfeitos (como ser animal e como ser moral) e deveres imperfeitos (relativos ao fim do ser humano), com os vícios que os contrariam: suicídio, mentira, avareza e servilismo.", "frameworks": [["Deveres perfeitos consigo mesmo", "Deveres de omissão (negativos), que proíbem vícios. Como ser animal: preservar a si mesmo (contra o suicídio), o uso natural da inclinação sexual e o uso moderado de alimento e bebida. Como ser moral: não despojar a si mesmo da prerrogativa de ser moral (liberdade interior), contra a mentira, a avareza e a falsa humildade (servilismo)."], ["Deveres imperfeitos consigo mesmo", "Deveres de fins (positivos), relativos ao fim do ser humano: desenvolver e aumentar a própria perfeição natural e a própria perfeição moral."], ["Amor à honra (honestas interna, iustum sui aestimium)", "A virtude que se opõe aos vícios contra a liberdade interior — uma disposição de alma sumamente distante da ambição (ambitio)."], ["Anfibolia nos conceitos morais de reflexão", "Seção episódica que trata de ambiguidades nos conceitos morais relativos aos deveres consigo mesmo."]], "conceitos": [["Suicídio (suicidium)", "Morte física voluntária ou matar a si mesmo; pode ser total (suicídio) ou parcial (mutilação de si mesmo, material ou formal). É qualificável como assassinato de si mesmo (homicidium dolosum)."], ["Mentira (mendacium)", "Vício contra a liberdade interior; a falsidade intencional que viola a dignidade do ser humano como ser moral."], ["Avareza", "Vício contra a liberdade interior; distingue-se da parcimônia (virtude) não por levar a poupança longe demais, mas por possuir um princípio (máxima) totalmente diferente."], ["Servilismo (falsa humildade)", "Vício contra a liberdade interior; fazer de si mesmo um objeto de desprezo."], ["Liberdade interior", "A prerrogativa de um ser moral de agir de acordo com princípios, não como joguete de meras inclinações."], ["Perfeição natural", "Desenvolver e aumentar as próprias capacidades naturais."], ["Perfeição moral", "Aumentar a própria perfeição moral (fim do ser humano)."]], "takeaways": ["Os deveres consigo mesmo são perfeitos (omissão, contra vícios) ou imperfeitos (fins, promover perfeição).", "Suicídio, mentira, avareza e servilismo são os vícios contra a liberdade interior.", "A virtude oposta é o amor à honra (honestas interna), distinta da ambição.", "Deve-se desenvolver a própria perfeição natural e moral.", "A avareza difere da parcimônia por princípio (máxima), não por grau."], "anti": ["Suicídio: matar a si mesmo é contrário ao dever de preservar a si mesmo na natureza animal e à dignidade da humanidade.", "Mentira: a falsidade intencional viola a liberdade interior e a dignidade do ser humano como ser moral.", "Avareza: não é parcimônia levada longe demais, mas um princípio (máxima) diferente — um vício contra a liberdade interior.", "Servilismo: a falsa humildade faz de si mesmo um objeto de desprezo, contra a dignidade inata."]}, {"num": "VII", "titulo": "Elementos da Ética — Deveres com os Outros", "parte": "Doutrina da Virtude · Elementos", "core": "Kant desenvolve os deveres éticos com os outros, fundados em duas grandes forças morais: o amor (que aproxima) e o respeito (que mantém a distância), e os deveres de acordo com as diferenças de condição.", "frameworks": [["Amor e respeito como forças morais", "Por analogia com o mundo físico, a atração e a repulsão associam os seres racionais. O princípio de amor mútuo admoesta a se aproximarem entre si; o do respeito, a se manterem a certa distância. Se uma dessas grandes forças morais falha, o nada (a imoralidade), com a goela escancarada, beberia todo o reino dos seres (morais) como uma gota d'água."], ["Dever de amor (benevolência ativa)", "O amor não é sentimento (prazer na perfeição de outros), mas a máxima da benevolência (prático), que resulta em beneficência. Ama ao teu próximo como a ti mesmo é a lei ética da perfeição."], ["Dever de respeito", "A máxima da limitação de nossa auto-estima pela dignidade da humanidade presente numa outra pessoa. É um dever negativo (da não exaltação de si mesmo acima dos outros), análogo ao dever de direito de não usurpar o que pertence a outrem."], ["Amor como dever lato, respeito como dever estrito", "O dever de respeito é considerado estrito em comparação ao dever de amor, que é um dever lato. Ao realizar o dever de amor, submeto outro à obrigação; ao observar o dever de respeito, submeto apenas a mim mesmo."]], "conceitos": [["Beneficência", "A máxima de fazer da felicidade dos outros o próprio fim; o dever correspondente é ser constrangido pela razão a adotar essa máxima como lei universal."], ["Filantropo", "Amigo da humanidade em geral, para quem está bem quando as coisas vão bem para todos."], ["Misantropo prático", "Inimigo da humanidade, para quem está bem somente quando as coisas vão mal para os outros."], ["Egoísta (solipsista)", "Indiferente a como as coisas vão para os outros, desde que estejam bem para si."], ["Antropofobia", "Afastamento dos seres humanos por timidez (misantropo do ponto de vista da sensibilidade)."], ["Deveres de acordo com as diferenças de condição", "Deveres para com os outros segundo suas condições (Capítulo II da Parte II)."]], "takeaways": ["Amor e respeito são as duas grandes forças morais que regem os deveres com os outros.", "O amor é dever lato (fazer dos fins dos outros os meus); o respeito é dever estrito (não degradar ninguém).", "A beneficência deve poupar o outro da humilhação e respeitar seus conceitos de felicidade.", "A máxima do egoísmo é contraditória como lei universal.", "O respeito é análogo ao dever de direito de não usurpar o que pertence a outrem."], "anti": ["Beneficência que humilha: ajudar alguém pobre de modo que seu bem-estar dependa de nossa generosidade o humilha; devemos nos conduzir como se nossa ajuda fosse meramente o devido ou um diminuto serviço de amor, poupando-o da humilhação e conservando seu respeito por si mesmo.", "Beneficência paternalista: não posso fazer o bem a alguém de acordo com meus conceitos de felicidade (salvo crianças e insanos); só posso beneficiá-lo segundo os seus conceitos de felicidade.", "Máxima do egoísmo: Cada um por si, Deus (a sorte) por todos é contrária ao dever, pois se tornada lei universal entraria em conflito consigo mesma (todos negariam assistência a todos)."]}, {"num": "VIII", "titulo": "Doutrina dos Métodos da Ética", "parte": "Doutrina da Virtude · Métodos", "core": "Kant apresenta o método de ensino e cultivo da virtude: a catequese moral (que deve preceder a catequese religiosa), o método socrático (maiêutica), o bom exemplo como prova de possibilidade (não como modelo), e a ascese ética.", "frameworks": [["Catequese moral", "O primeiro e mais essencial instrumento de ensino da doutrina da virtude para o aluno principiante. Deve preceder uma catequese religiosa e ser apresentada separadamente, como um todo que subsiste por si mesmo, pois é somente através de princípios morais puros que se pode empreender a transição da doutrina da virtude à religião."], ["Método erotético (diálogo e catequese)", "O método de ensino por questões divide-se em método do diálogo (o mestre questiona a razão do aluno) e da catequese (questiona a memória). No diálogo, mestre e aluno se dirigem perguntas mutuamente; o mestre é a parteira das ideias do aluno (maiêutica socrática)."], ["Bom exemplo como prova, não como modelo", "O bom exemplo (conduta exemplar) não deveria servir como modelo, mas somente como prova de que é realmente possível agir em conformidade com o dever. Uma máxima de virtude consiste na autonomia subjetiva da razão prática de cada ser humano; a própria lei, e não a conduta de outros, deve servir como estímulo."], ["Ascese ética", "O meio experimental (técnico) para o cultivo da virtude é o bom exemplo do mestre e o exemplo que adverte os outros. Para um ser humano ainda não desenvolvido, a imitação constitui a primeira determinação de sua vontade a aceitar máximas que ele posteriormente produz para si mesmo."]], "conceitos": [["Catequese moral", "Ensino básico dos deveres de virtude, desenvolvido a partir da razão humana ordinária."], ["Maiêutica (método socrático)", "O mestre, através de perguntas, norteia o curso de pensamento do aluno, meramente apresentando casos em que sua predisposição para certos conceitos se desenvolverá; o mestre é a parteira das ideias do aluno."], ["Docendo discimus", "Ensinando, aprendemos — o aluno, ao questionar, proporciona ensejos para que o próprio mestre aprenda a interrogar habilmente."], ["Hábito", "Estabelecer uma inclinação duradoura, independente de qualquer máxima, através de satisfações frequentemente reiteradas; é um mecanismo do senso, em lugar de um princípio do pensamento."], ["Ascese ética", "Disciplina do cultivo da virtude pelo bom exemplo e pela prática."]], "takeaways": ["A catequese moral deve preceder e ser separada da catequese religiosa.", "O método socrático (maiêutica) faz o aluno descobrir por si mesmo os conceitos morais.", "O bom exemplo é prova de possibilidade, não modelo a imitar.", "Ceder ao vício gradativamente é impuro e não gera virtude.", "A ascese ética cultiva a virtude pelo bom exemplo e pela prática."], "anti": ["Dizer ao aluno segue o exemplo daquele menino bom: isso só o levaria a odiar tal menino, que o coloca numa luz desfavorável. O bom exemplo não deve servir como modelo, mas somente como prova de que é possível agir conforme o dever.", "Ceder ao vício gradativamente: ceder por vezes ao vício com o propósito de escapar dele gradativamente seria ela mesma impura e mesmo viciosa, não gerando nenhuma virtude (que está baseada num princípio único).", "Entrelaçar catequese moral com religião: a catequese moral deve ser apresentada separadamente; entrelaçá-la como interpolação nos ensinamentos da religião tornaria os credos religiosos impuros."]}];
+const GLOSSARY = [["Amor à honra (honestas interna)", "Virtude que se opõe aos vícios contra a liberdade interior; disposição de alma distante da ambição.", "VI"], ["Antropofobia", "Afastamento dos seres humanos por timidez; misantropo do ponto de vista da sensibilidade.", "VII"], ["Arbítrio (Willkür)", "Escolha determinável pela razão pura (livre arbítrio) ou só pela inclinação (arbítrio animal); o arbítrio humano é afetado por impulsos mas não determinado por eles.", "I"], ["Ascese ética", "Meio experimental (técnico) para o cultivo da virtude, pelo bom exemplo e pela prática.", "VIII"], ["Autorização (facultas moralis)", "Liberdade não limitada por nenhum imperativo contrário; o que é permitido (licitum).", "I"], ["Avareza", "Vício contra a liberdade interior; distingue-se da parcimônia por princípio (máxima), não por grau.", "VI"], ["Beneficência", "Máxima de fazer da felicidade dos outros o próprio fim; dever de promover com os próprios meios a felicidade de outros necessitados, sem esperar retorno.", "VII"], ["Catequese moral", "Primeiro e mais essencial instrumento de ensino da doutrina da virtude; deve preceder e ser separada da catequese religiosa.", "VIII"], ["Condição civil (status civilis)", "Condição dos indivíduos no seio de um povo na sua relação recíproca.", "IV"], ["Concupiscência", "Determinação sensível da mente que ainda não se converteu em ato da faculdade do desejo.", "I"], ["Contrato", "Ato pelo qual a vontade de dois sujeitos transfere a propriedade de algo; aquisição derivada.", "III"], ["Coragem (fortitudo)", "Faculdade e intenção deliberada de resistir a um oponente vigoroso mas injusto.", "V"], ["Dever", "A ação à qual alguém está obrigado; a matéria da obrigação.", "I"], ["Direito", "Soma das condições sob as quais a escolha de alguém pode ser unida à escolha de outrem de acordo com uma lei universal de liberdade.", "II"], ["Direito cosmopolita (ius cosmopoliticum)", "Ideia racional de uma comunidade universal pacífica de todas as nações; princípio jurídico, não filantrópico.", "IV"], ["Direito das Gentes (ius publicum civitatum)", "Direito dos Estados na sua relação recíproca; Estados como pessoas morais em estado de natureza (guerra constante).", "IV"], ["Direito equívoco (ius aequivocum)", "Direito em sentido lato (ius latum), no qual nenhuma lei determina como julgar; inclui equidade e direito de necessidade.", "II"], ["Direito estrito (ius strictum)", "Direito não combinado com nada ético; requer apenas fundamentos externos; ligado à competência de exercer coerção.", "II"], ["Direito matrimonial", "Relação de igualdade entre duas pessoas de sexos diferentes para a posse recíproca de suas pessoas.", "III"], ["Direito pessoal de caráter real (ius in re)", "Direito sobre uma pessoa como se fosse uma coisa, no contexto da sociedade doméstica.", "III"], ["Direito público", "Conjunto das leis que precisam ser promulgadas para criar uma condição jurídica.", "IV"], ["Doutrina da virtude (doctrina officiorum virtutis)", "Parte da doutrina geral dos deveres que resulta em liberdade interior sob as leis éticas.", "V"], ["Egoísta (solipsista)", "Indiferente a como as coisas vão para os outros, desde que estejam bem para si.", "VII"], ["Equidade", "Direito sem coerção; direito em sentido lato que não pode ser decidido por tribunal.", "II"], ["Escolha", "Faculdade do desejo unida à consciência da capacidade de realizar seu objeto mediante ação própria.", "I"], ["Estado (civitas)", "Conjunto dos indivíduos numa condição jurídica, em relação aos seus próprios membros.", "IV"], ["Ética", "Sistema dos fins da pura razão prática; doutrina dos fins que são também deveres.", "V"], ["Filantropo", "Amigo da humanidade em geral, para quem está bem quando as coisas vão bem para todos.", "VII"], ["Fim", "Objeto da escolha através de cuja representação a escolha é determinada a levar a efeito esse objeto.", "V"], ["Fim que é também um dever", "Fim que reside em conceitos da razão prática e que estou obrigado a tomar como meu.", "V"], ["Hábito", "Inclinação duradoura independente de qualquer máxima; mecanismo do senso, não princípio do pensamento.", "VIII"], ["Imperativo", "Regra prática pela qual uma ação em si contingente é tomada necessária.", "I"], ["Imperativo categórico", "Imperativo incondicional que representa uma ação como objetivamente necessária pela mera representação da própria ação (sua forma).", "I"], ["Imperativo técnico", "Preceito da arte que comanda sempre condicionalmente.", "I"], ["Interesse", "Conexão do prazer com a faculdade do desejo que o entendimento julga encerrar como regra geral; pode ser intelectual (puro) ou sensível.", "I"], ["Legalidade", "Conformidade com as leis jurídicas (ação externa).", "I"], ["Leis da liberdade (morais)", "Leis que regem o que deve acontecer; jurídicas (ação externa) ou éticas (lei como fundamento determinante).", "I"], ["Leis da natureza", "Leis que regem o que acontece.", "I"], ["Liga de nações (foedus Amphictyonum)", "Federação de Estados livres, sem autoridade soberana, dissolvível e renovável, para proteção contra ataques externos.", "IV"], ["Maiêutica (método socrático)", "O mestre, por perguntas, norteia o curso de pensamento do aluno, sendo a parteira das ideias do aluno.", "VIII"], ["Mentira (mendacium)", "Vício contra a liberdade interior; falsidade intencional que viola a dignidade do ser humano como ser moral.", "VI"], ["Misantropo prático", "Inimigo da humanidade, para quem está bem somente quando as coisas vão mal para os outros.", "VII"], ["Moralidade", "Conformidade com as leis éticas (lei como fundamento determinante).", "I"], ["Obrigação", "Necessidade de uma ação livre sob um imperativo categórico da razão.", "I"], ["Posse inteligível (possessio noumenon)", "Posse jurídica de um objeto sem ocupação física.", "III"], ["Posse sensível", "Posse física (detentio), ocupação empírica.", "III"], ["Postulado da razão prática", "É possível para mim ter qualquer objeto externo de minha escolha como meu.", "III"], ["Princípio universal do Direito", "Qualquer ação é justa se for capaz de coexistir com a liberdade de todos de acordo com uma lei universal.", "II"], ["República representativa", "Sistema representativo do povo, protegendo seus direitos em seu nome pela união de todos os cidadãos e atuando através de delegados.", "IV"], ["Respeito", "Máxima da limitação de nossa auto-estima pela dignidade da humanidade presente numa outra pessoa; dever negativo.", "VII"], ["Servilismo (falsa humildade)", "Vício contra a liberdade interior; fazer de si mesmo um objeto de desprezo.", "VI"], ["Soberania popular", "No povo é originalmente encontrada a suprema autoridade da qual todos os direitos dos indivíduos como súditos têm que ser derivados.", "IV"], ["Suicídio (suicidium)", "Morte física voluntária ou matar a si mesmo; total ou parcial (mutilação).", "VI"], ["Transgressão (reatus)", "Feito contrário ao dever.", "I"], ["Virtude (virtus, fortitudo moralis)", "Fortitude moral; resistência ao que se opõe à disposição moral em nós.", "V"], ["Vontade", "Faculdade do desejo considerada quanto ao fundamento que determina a escolha; estritamente, a própria razão prática.", "I"]];
+const RULES = [["Ação externa pode coexistir com a liberdade de todos?", "Justa", "Princípio universal do Direito"], ["Ação conforme à lei externa, mas não pela lei como motivo", "Legal, não moral", "Legalidade ≠ moralidade"], ["Comando incondicional, pela forma da ação", "Imperativo categórico", "Só a doutrina dos costumes o fornece"], ["Comando condicional, meio para fim", "Imperativo técnico", "Preceito da arte"], ["Quero ter algo externo como meu", "Posse inteligível", "Postulado da razão prática"], ["Estou obrigado a ter um fim", "Ética (fim que é dever)", "Coerção aos fins é contraditória"], ["Dever com os outros", "Amor (lato) + respeito (estrito)", "Amor aproxima, respeito mantém distância"], ["Beneficência", "Sem humilhar, segundo os fins do outro", "Paternalismo é injusto"], ["Ensinar virtude", "Catequese moral antes da religiosa", "Princípios morais puros"], ["Estado legítimo", "República representativa", "Povo é o soberano"], ["Relações entre Estados", "Liga de nações (federação)", "Sem autoridade soberana"], ["Colonização", "Só por contrato justo", "Força contra povos que dependem de vastas regiões é injusta"]];
+const CONSIGO = [["Perfeito (animal)", "Preservar a si mesmo", "Suicídio, uso não natural, excesso"], ["Perfeito (moral)", "Liberdade interior", "Mentira, avareza, servilismo"], ["Imperfeito", "Perfeição natural e moral", "—"]];
+const OUTROS = [["Amor", "Fazer dos fins dos outros os meus", "Lato (benevolência ativa)"], ["Respeito", "Não degradar ninguém a mero meio", "Estrito (negativo)"]];
+const TELLS = [["Cada um por si, Deus por todos", "Máxima do egoísmo, contraditória como lei universal.", "VII"], ["Segue o exemplo daquele menino bom", "Erro pedagógico; o exemplo é prova, não modelo.", "VIII"], ["Beneficência que humilha", "Não é autêntico benefício; poupe o outro da humilhação.", "VII"], ["Boas intenções na colonização", "Não limpam a mácula da injustiça dos meios.", "IV"], ["Ceder ao vício gradativamente", "Impuro, não gera virtude.", "VIII"], ["Avareza", "Não é parcimônia levada longe demais, mas princípio (máxima) diferente.", "VI"]];
+const PATTERNS = [["Teste de Coexistência de Liberdades", "Para julgar se uma ação externa é justa.", "Verifique se a ação (ou sua máxima) pode coexistir com a liberdade de todos de acordo com uma lei universal. Se sim, é justa; quem a obstaculiza produz injustiça.", "Aplica-se ao direito estrito (ação externa), não à ética (que exige fins e motivação).", "II"], ["Distinção Legalidade / Moralidade", "Para separar o domínio do Direito do da Ética.", "Legalidade = conformidade com leis jurídicas (ação externa); moralidade = conformidade com leis éticas (a lei como fundamento determinante). O Direito não exige que a lei seja o motivo; a Ética sim.", "Uma ação pode ser legal sem ser moral; o Direito regula a liberdade externa, a Ética a interna e a externa.", "I"], ["Imperativo Categórico vs. Técnico", "Para identificar o tipo de comando moral.", "Categórico = incondicional, representa a ação como objetivamente necessária pela mera representação da própria ação (sua forma); técnico = condicional, meio para um fim.", "Só a doutrina dos costumes fornece exemplos de imperativos categóricos.", "I"], ["Posse Inteligível (possessio noumenon)", "Para fundamentar a propriedade como relação jurídica.", "Distinga posse sensível (física, detentio) de posse inteligível (jurídica, sem ocupação física). O meu jurídico se funda na posse inteligível, pelo postulado da razão prática.", "A posse inteligível estende o conceito de posse além da empírica, permitindo dizer que algo é juridicamente meu mesmo sem tê-lo nas mãos.", "III"], ["Aquisição Originária vs. Derivada", "Para entender como se adquire propriedade.", "Originária = primeira ocupação (base); derivada = por contrato (transfere o que já é de alguém).", "A aquisição derivada pressupõe a originária; ambas se fundam no postulado da razão prática.", "III"], ["Fim que é também um Dever", "Para identificar o que é próprio da ética.", "Se estou obrigado a tomar como fim algo que reside em conceitos da razão prática, tenho um fim que é em si mesmo um dever. Ninguém pode me coagir a ter um fim (a coerção aos fins é contraditória).", "Distingue a ética (que exige fins) do direito (que só regula ações externas).", "V"], ["Amor e Respeito como Forças Morais", "Para equilibrar os deveres com os outros.", "O amor aproxima (fazer dos fins dos outros os meus); o respeito mantém distância (não degradar ninguém a mero meio). Amor = dever lato; respeito = dever estrito.", "Se uma dessas forças falha, a imoralidade domina; o respeito é análogo ao dever de direito de não usurpar o que pertence a outrem.", "VII"], ["Beneficência sem Humilhação", "Para praticar a beneficência sem degradar o outro.", "Conduza-se como se sua ajuda fosse meramente o devido ou um diminuto serviço de amor; evite qualquer aparência de pretender obrigar o outro; beneficie-o segundo os seus conceitos de felicidade, não os seus.", "A beneficência paternalista (impor meus conceitos de felicidade) é injusta, salvo para crianças e insanos.", "VII"], ["Catequese Moral antes da Religiosa", "Para ensinar deveres de virtude.", "Apresente a catequese moral separadamente, como um todo que subsiste por si mesmo, antes da catequese religiosa; use o método socrático (maiêutica) para extrair da razão do aluno os conceitos morais.", "Entrelaçar com religião torna os credos impuros; o bom exemplo deve ser prova de possibilidade, não modelo a imitar.", "VIII"], ["República Representativa", "Para avaliar a legitimidade de um Estado.", "Qualquer república genuína é um sistema representativo do povo, protegendo seus direitos em seu nome pela união de todos os cidadãos e atuando através de delegados; o povo é o soberano original.", "O povo não deve devolver as rédeas do governo àqueles que as empunhavam antes; a soberania permanece no povo.", "IV"], ["Liga de Nações (Federação, não Estado)", "Para pensar as relações entre Estados.", "A liga de nações deve ser uma associação (federação) dissolvível e renovável, sem autoridade soberana, para proteção contra ataques externos — não intromissão nos desentendimentos internos.", "Uma liga com autoridade soberana seria uma constituição civil, não uma federação; o direito das gentes rege Estados em estado de natureza (guerra constante).", "IV"], ["Direito Cosmopolita (Jurídico, não Filantrópico)", "Para julgar a colonização e a comunidade universal.", "A comunidade universal pacífica é um princípio jurídico (fundado na esfericidade da Terra), não filantrópico; a instalação em terras de povos que dependem de vastas regiões só pode ocorrer por contrato que não tire vantagem da ignorância.", "A colonização pela força, mesmo com boas intenções, é injusta; o direito de estabelecimento é contestável contra povos pastores/caçadores.", "IV"]];
+
+/* ===== NAVEGAÇÃO ===== */
+const NAV = [
+  {id:"overview", label:"Visão geral", num:"§", sub:"arquitetura da obra"},
+  {id:"chapters", label:"Capítulos", num:"I–VIII", sub:"os oito capítulos"},
+  {id:"glossary", label:"Glossário", num:"A–Z", sub:"56 termos"},
+  {id:"cheatsheet", label:"Cheatsheet", num:"→", sub:"regras de decisão"},
+  {id:"patterns", label:"Padrões", num:"12", sub:"técnicas de aplicação"},
+];
+
+function buildNav(){
+  const nav = document.getElementById("nav");
+  nav.innerHTML = NAV.map(n=>
+    `<button class="nav-item" data-sec="${n.id}" onclick="go('${n.id}')">
+      <span class="num">${n.num}</span>
+      <span>${n.label}<span class="sub">${n.sub}</span></span>
+    </button>`).join("");
+}
+
+function go(id){
+  document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));
+  document.getElementById("sec-"+id).classList.add("active");
+  document.querySelectorAll(".nav-item").forEach(b=>b.classList.toggle("active", b.dataset.sec===id));
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+
+/* ===== VISÃO GERAL: estrutura ===== */
+function renderEstrutura(){
+  const tbody = document.getElementById("tbl-estrutura");
+  tbody.innerHTML = CHAPTERS.map((c,i)=>
+    `<tr>
+      <td class="mono">${c.num}</td>
+      <td><b>${c.titulo}</b></td>
+      <td>${c.parte}</td>
+      <td>${c.frameworks.map(f=>f[0]).slice(0,3).join(" · ")}</td>
+    </tr>`).join("");
+}
+
+/* ===== CAPÍTULOS ===== */
+let curIdx = 0;
+function renderChapter(i){
+  curIdx = i;
+  const c = CHAPTERS[i];
+  const nav = document.getElementById("chapter-nav");
+  nav.innerHTML = `
+    <button class="nav-item" onclick="renderChapter(${(i-1+CHAPTERS.length)%CHAPTERS.length})">← Anterior</button>
+    <span class="chapter-pos">${c.num} / VIII</span>
+    <button class="nav-item" onclick="renderChapter(${(i+1)%CHAPTERS.length})">Próximo →</button>`;
+
+  const fw = c.frameworks.map(f=>`<div class="fw-item"><h4>${f[0]}</h4><p>${f[1]}</p></div>`).join("");
+  const conc = c.conceitos.map(k=>`<div class="concept"><div class="term">${k[0]}</div><div class="def">${k[1]}</div></div>`).join("");
+  const tk = c.takeaways.map(t=>`<div class="takeaway"><span class="tick">✓</span><p>${t}</p></div>`).join("");
+  const anti = c.anti.map(a=>`<div class="anti"><span class="warn">⚠</span><p>${a}</p></div>`).join("");
+
+  document.getElementById("chapter-view").innerHTML = `
+    <div class="chapter-hero" data-num="${c.num}">
+      <div class="parte">${c.parte}</div>
+      <h2>Capítulo ${c.num} — ${c.titulo}</h2>
+      <p class="core"><b>Ideia central.</b> ${c.core}</p>
+    </div>
+    <div class="block"><div class="b-label">Frameworks</div>${fw}</div>
+    <div class="block"><div class="b-label">Conceitos-chave</div><div class="concept-grid">${conc}</div></div>
+    <div class="block"><div class="b-label">Pontos de retenção</div>${tk}</div>
+    <div class="block"><div class="b-label">Anti-padrões</div>${anti}</div>`;
+}
+
+/* ===== GLOSSÁRIO ===== */
+function renderGlossary(q){
+  q = (q||"").toLowerCase();
+  const items = GLOSSARY.filter(g=>!q || g[0].toLowerCase().includes(q) || g[1].toLowerCase().includes(q));
+  document.getElementById("gloss-count").textContent = items.length + " de " + GLOSSARY.length + " termos";
+  document.getElementById("gloss-list").innerHTML = items.map(g=>
+    `<div class="gloss-item"><div class="term">${g[0]}<span class="ch">CH ${g[2]}</span></div><div class="def">${g[1]}</div></div>`).join("");
+}
+
+/* ===== CHEATSHEET ===== */
+function renderTables(){
+  document.getElementById("tbl-rules").innerHTML = RULES.map(r=>
+    `<tr><td>${r[0]}</td><td><b>${r[1]}</b></td><td class="mono">${r[2]}</td></tr>`).join("");
+  document.getElementById("tbl-consigo").innerHTML = CONSIGO.map(r=>
+    `<tr><td class="mono">${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td></tr>`).join("");
+  document.getElementById("tbl-outros").innerHTML = OUTROS.map(r=>
+    `<tr><td class="mono">${r[0]}</td><td><b>${r[1]}</b></td><td>${r[2]}</td></tr>`).join("");
+  document.getElementById("tbl-tells").innerHTML = TELLS.map(r=>
+    `<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td class="mono">CH ${r[2]}</td></tr>`).join("");
+}
+
+/* ===== PADRÕES ===== */
+function renderPatterns(){
+  document.getElementById("patterns-list").innerHTML = PATTERNS.map((p,i)=>
+    `<div class="pattern">
+      <div class="p-head"><span class="p-num">${String(i+1).padStart(2,"0")}</span><h3>${p[0]}</h3><span class="ch">CH ${p[4]}</span></div>
+      <div class="p-use">Quando usar — ${p[1]}</div>
+      <p>${p[2]}</p>
+      <div class="p-trade"><b>Trade-offs.</b> ${p[3]}</div>
+    </div>`).join("");
+}
+
+/* ===== INIT ===== */
+document.addEventListener("DOMContentLoaded", ()=>{
+  buildNav();
+  renderEstrutura();
+  renderChapter(0);
+  renderGlossary("");
+  renderTables();
+  renderPatterns();
+  document.getElementById("gloss-input").addEventListener("input", e=>renderGlossary(e.target.value));
+  document.addEventListener("keydown", e=>{
+    if(e.key==="ArrowLeft"||e.key==="ArrowRight"){
+      if(document.activeElement && document.activeElement.id==="gloss-input") return;
+      if(!document.getElementById("sec-chapters").classList.contains("active")) return;
+      renderChapter(e.key==="ArrowRight" ? (curIdx+1)%CHAPTERS.length : (curIdx-1+CHAPTERS.length)%CHAPTERS.length);
+    }
+  });
+});
+</script>
+</body>
+</html>
